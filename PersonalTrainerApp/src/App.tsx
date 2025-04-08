@@ -1,5 +1,6 @@
 import './App.css'
 import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import CustomerList from "./CustomerList"
 import TrainingList from './TrainingList'
 
@@ -19,7 +20,6 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 
 const drawerWidth = 240;
-const navItems = ['Home', 'Trainings', 'Calendar'];
 
 function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -27,6 +27,12 @@ function App() {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  const navItems = [
+    { text: 'Home', path: '/' },
+    { text: 'Trainings', path: '/trainings' },
+    { text: 'Calendar', path: '/calendar' },
+  ];
 
   const drawer = (
     <Box onClick={() => setMobileOpen(false)} sx={{ textAlign: 'center' }}>
@@ -36,9 +42,9 @@ function App() {
       <Divider />
       <List>
         {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
-            <ListItemButton sx={{ textAlign: 'center' }}>
-              <ListItemText primary={item} />
+          <ListItem key={item.text} disablePadding>
+            <ListItemButton component={Link} to={item.path} sx={{ textAlign: 'center' }}>
+              <ListItemText primary={item.text} />
             </ListItemButton>
           </ListItem>
         ))}
@@ -47,8 +53,7 @@ function App() {
   );
 
   return (
-    <>
-
+    <Router>
       <Box sx={{ display: 'flex' }}>
         <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
           <Toolbar>
@@ -89,12 +94,15 @@ function App() {
           }}
         >
           <Container maxWidth="xl">
-            <CustomerList />
-            <TrainingList />
+            <Routes>
+              <Route path="/" element={<CustomerList />} />
+              <Route path="/trainings" element={<TrainingList />} />
+              <Route path="/calendar" element={<div>Calendar view coming soon!</div>} />
+            </Routes>
           </Container>
         </Box>
       </Box>
-    </>
+    </Router>
   );
 }
 export default App
