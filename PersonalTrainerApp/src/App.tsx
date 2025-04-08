@@ -1,5 +1,6 @@
 import './App.css'
 import CustomerList from "./CustomerList"
+import TrainingList from './TrainingList'
 
 // MUI imports:
 import Container from "@mui/material/Container"
@@ -38,6 +39,8 @@ function App() {
       </Box>
 
       <CustomerList />
+      <TrainingList />
+
     </Container>
   )
 }

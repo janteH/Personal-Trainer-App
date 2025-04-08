@@ -5,6 +5,8 @@ import { ColDef } from "ag-grid-community";
 import { Button } from "@mui/material";
 import AddCustomer from "./AddCustomer";
 import EditCustomer from "./EditCustomer";
+import TrainingList from "./TrainingList";
+
 
 // Register all Community features
 ModuleRegistry.registerModules([AllCommunityModule]);
@@ -47,14 +49,49 @@ function CustomerList() {
     const [customer, setCustomer] = useState<TCustomerData[]>([]);
 
     const [columnDefs] = useState<ColDef<TCustomerData>[]>([
-        { field: "firstname" },
-        { field: "lastname" },
-        { field: "streetaddress" },
-        { field: "postcode" },
-        { field: "city" },
-        { field: "email" },
-        { field: "phone" },
         {
+            field: "Add Training",
+            cellRenderer: (params: ICellRendererParams) => {
+                return <Button onClick={() => handleAddTraining(params.value)}>Add Training</Button>
+            }
+        },
+        {
+            field: "firstname",
+            sortable: true,
+            filter: true
+        },
+        {
+            field: "lastname",
+            sortable: true,
+            filter: true
+        },
+        {
+            field: "streetaddress",
+            sortable: true,
+            filter: true
+        },
+        {
+            field: "postcode",
+            sortable: true,
+            filter: true
+        },
+        {
+            field: "city",
+            sortable: true,
+            filter: true
+        },
+        {
+            field: "email",
+            sortable: true,
+            filter: true
+        },
+        {
+            field: "phone",
+            sortable: true,
+            filter: true
+        },
+        {
+            field: "Edit",
             cellRenderer: (params: ICellRendererParams<TCustomerData>) =>
                 <EditCustomer
                     currentCustomer={params.data as TCustomerData}
@@ -62,7 +99,7 @@ function CustomerList() {
                 />
         },
         {
-            field: "_links.self.href",
+            field: "Delete",
             cellRenderer: (params: ICellRendererParams) => {
                 return <Button onClick={() => handleDelete(params.value)} color="error">Delete</Button>
             }
@@ -122,8 +159,7 @@ function CustomerList() {
             .then(() => fetchCustomers())
             .catch(error => console.error(error))
     }
-    // Edit Customer End
-
+    // Edit Customer End    
 
 
     useEffect(fetchCustomers, []);
