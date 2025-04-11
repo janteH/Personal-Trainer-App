@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
 import { ColDef } from "ag-grid-community";
-import { TCustomerData, TCustomer } from "./CustomerList";
+import { TCustomer } from "./CustomerList";
+import AddTraining from "./AddTraining";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -12,10 +13,7 @@ export type TTraining = {
     date: string;
     duration: number;
     activity: string;
-    customer: {
-        firstname: string;
-        lastname: string;
-    }
+    customer: string;
 };
 
 type Props = {
@@ -65,11 +63,27 @@ function TrainingList({ customer }: Props) {
             .catch(error => console.error(error));
     };
 
+    const addTraining = (training: TTraining) => {
+        const options = {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(training)
+        };
+
+        fetch(`${BASE_URL}/gettrainings`, options)
+            .then(() => fetchTrainings())
+            .catch(error => console.error(error))
+    }
+
+
     useEffect(fetchTrainings, []);
 
 
     return (
-        <div style={{ height: 500, width: "90vw" }}>
+        //<AddTraining addTraining={addTraining} />
+        <div style={{ height: 500 }}>
             <AgGridReact<TTraining>
                 rowData={trainings}
                 columnDefs={columnDefs}

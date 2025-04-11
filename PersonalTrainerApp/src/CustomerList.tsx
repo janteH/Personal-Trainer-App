@@ -49,10 +49,10 @@ function CustomerList() {
     const [customer, setCustomer] = useState<TCustomerData[]>([]);
 
     const [columnDefs] = useState<ColDef<TCustomerData>[]>([
-        {
+        {   //ei toiminnallisuutta
             field: "Add Training",
             cellRenderer: (params: ICellRendererParams) => {
-                return <Button onClick={() => handleAddTraining(params.value)}>Add Training</Button>
+                return <Button>Add Training</Button>
             }
         },
         {
@@ -167,7 +167,7 @@ function CustomerList() {
     return (
         <>
             <AddCustomer addCustomer={addCustomer} />
-            <div style={{ height: 1000, width: "90vw" }}>
+            <div style={{ height: 1000 }}>
                 <AgGridReact<TCustomerData>
                     rowData={customer}
                     columnDefs={columnDefs}
